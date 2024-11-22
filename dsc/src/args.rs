@@ -49,6 +49,8 @@ pub enum SubCommand {
         parameters: Option<String>,
         #[clap(short = 'f', long, help = "Parameters to pass to the configuration as a JSON or YAML file", conflicts_with = "parameters")]
         parameters_file: Option<String>,
+        #[clap(short = 'r', long, help = "Specify the operating system root path if not targeting the current running OS")]
+        system_root: Option<String>,
         // Used to inform when DSC is used as a group resource to modify it's output
         #[clap(long, hide = true)]
         as_group: bool,
@@ -100,8 +102,12 @@ pub enum ConfigSubCommand {
         path: Option<String>,
         #[clap(short = 'f', long, help = "The output format to use")]
         format: Option<OutputFormat>,
+        // Used by Assertion resource to return `test` result as a `get` result
         #[clap(long, hide = true)]
         as_get: bool,
+        // Used by Assertion resource to return `test` result as a configuration `test` result
+        #[clap(long, hide = true)]
+        as_config: bool,
     },
     #[clap(name = "validate", about = "Validate the current configuration", hide = true)]
     Validate {
